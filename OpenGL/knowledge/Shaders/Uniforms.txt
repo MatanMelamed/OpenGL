@@ -1,0 +1,17 @@
+Uniforms are ways to get data from CPU to GPU - from  cpp file to a shader program.
+Note - uniforms can be set once per draw, you cannot set the same uniform differently for different objects in the same draw,
+I.e. you cannot set two triangles to different colors using uniforms.
+
+To set a uniform, first declare it in a shader:
+	uniform vec4 u_Color;
+Then retreive it's location in the cpp file:
+	...
+	glUseProgram(shader);
+
+	int location = glGetUniformLocation(shader, "u_Color");
+You should check if it did not fail (value will be -1):
+	ASSERT(location != -1);
+
+Finaly, set the uniform data:
+	glUniform4f(location, 1, 0.3, 0.8, 1);
+

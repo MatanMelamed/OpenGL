@@ -1,0 +1,43 @@
+Best site for gl documentation:
+http://docs.gl/
+
+gl = OpenGL
+OpenGL is kind of a state machine, we need to set it's state, by binding data for example, 
+and then tell it to do what we want to do, like to draw the bound data. 
+The data we want to bind is the information of the object to draw.
+These are constructed by vertecies, and each can contain a few attributes.
+Vertex attributes can describe things like position, texture coordinates, normals, etc..
+The vertex info is inserted to a buffer called vertex buffer.
+
+Vertex Buffer - contains data of vertices to use.
+OpenGL need us to tell it how to read the data.
+Is the data in floats? what is the layout (2 or 3 floats define vertex)?
+
+Index Buffer - contains indices
+Triangle is the most basic unit to cover area, for that reason, all elements can be constructed by them.
+Two triangles that are connected can be represented by 4 verticese instead of 6 as two of them are the same ones.
+For this reason (to save memory), instead of giving the all vertecies in a buffer,
+we would give a buffer of unique vertecies and another buffer - the index buffer.
+the index buffer will represents the vertecies indexes to be drawn.
+I.e. 1, 2, 3 will direct the openGL to draw the first 3 vertecies as a triangle.
+
+DrawingRectExample.cpp shows how to draw a rectangle with a color using vertex buffer, index buffer, vertex shader  & fragment shader.
+
+Vertex Array
+This object will contain the data to bind (vertex buffer) and it's layout.
+This way, if we switch to draw another object, we won't be needing to bind it's data AND specify it's layout.
+When we bind vertex array and a vertex buffer, nothing links them,
+but when we specify the vertex buffer attributes layout by vertex attrib pointer:
+	glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0)
+the gl bind the index buffer to the bound vertex array object.
+	
+OpenGL Profiles
+The following line should be called right after glfwInit():
+	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
+This will set the gl profile to a core profile, we can replace CORE with COMPAT
+Compatability profile will create a single default vao for us to use without specifing it,
+but Core profile will not create and we would then need to create at least one for using index buffer and specifying it's layout.
+This leaves us with two options:
+Use COMPAT and ignore vertex arrays - gl will bind a default one and we would need to bind vertex buffer and it's layout each draw.
+The second option is to use CORE and create vaos and manage these.
+In the past, a single VAO was faster, but now nvidia recommends the use of multiple vaos.

@@ -1,0 +1,40 @@
+https://docs.microsoft.com/en-us/visualstudio/ide/default-keyboard-shortcuts-in-visual-studio?view=vs-2019
+
+Navigation
+
+open file by name		ctrl + shift + t
+open last file			ctrl + -
+open last file reverse	ctrl + shift + -
+switch opened file		ctrl + tab
+switch opened file rev	ctrl + shift + tab
+go to definition		F12
+go to declaration		ctrl + F12
+
+Insert - create code
+auto code gen			ctrl + k + s
+clipboard ring			ctrl + shift + v
+Quick Action			ctrl + .
+
+Format - manipulate existing code
+format					ctrl + k + d
+delete line				ctrl + l
+duplicate line			ctrl + d
+cut line				ctrl + x
+move line				alt + arrow down / up
+find & replace			ctrl + H (to replace all alt + A)
+comment					ctrl + k c
+uncomment				ctrl + k u
+
+View - manipulate code viewing
+show params				ctrl + shift + space
+collapse all			ctrl + M, O
+expand all				ctrl + M, X
+collapse current		ctrl + M, S
+expand current			ctrl + M, E
+fullscreen				alt + shift + enter
+Quick launch			ctrl + Q
+
+Bookmarks - if you visit same code alot
+add / remove			ctrl + k, k
+next bookmark			ctrl + k, n
+previous bookmark		ctrl + k, p

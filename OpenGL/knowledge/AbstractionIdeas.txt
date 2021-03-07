@@ -1,0 +1,4 @@
+Few things we need to do: Vertex buffers & layouts, VAOS, and Shaders
+
+We would like to tie these together to a Renderer, Such we can just tell it to render for use stuff.
+

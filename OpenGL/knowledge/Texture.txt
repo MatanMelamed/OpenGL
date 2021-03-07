@@ -1,0 +1,11 @@
+OpenGL requires us to set parameters for textures, a texture without these will be rendered as black.
+
+The textures parameters are:
+GL_TEXTURE_MIN_FILTER - how to sample image when it needs to be scaled down
+GL_TEXTURE_MAG_FILTER - how to sample image when it needs to be scaled up
+GL_TEXTURE_WRAP_S - how to wrap the texture x axis
+GL_TEXTURE_WRAP_T - how to wrap the texture y axis
+
+internal format - how gl stores image
+format - how the image is stored
+

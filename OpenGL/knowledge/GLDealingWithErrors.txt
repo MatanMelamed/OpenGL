@@ -1,0 +1,8 @@
+When a GL error occured, gl will set a flag that can be retreived to see info about the error.
+GL will stack errors as they occured so we might need to call glGetError() in a loop to clear errors before we try the part
+we suspect in the code that is problematic, so we could call glGetError() after that part and get the relevant info.
+For example: while (glGetError() != GL_NO_ERROR);
+
+From OpenGL version 4.3 and up, a new method was added which tells the gl to call one of our methods when an error occured.
+That way, we do not need to guess etc
+

@@ -1,0 +1,8 @@
+C++
+When finishing a line in \ (no space after!)
+it will ignore the new line character and allow you to continue writing as a single line.
+I.e:
+#define A callA(lots of params);\
+			callB(lots of params);
+equals
+#define A callA(lots of params);callB(lots of params);

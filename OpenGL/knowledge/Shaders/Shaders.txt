@@ -1,0 +1,97 @@
+A program that is executed on the GPU.
+Shader reads the data to be drawn and draw it using it's logic.
+
+The two most popular shaders types: Fragment Shaders (known also as Pixel Shaders), Vertex Shaders.
+Usually in the draw pipeline Vertex shader to the fragment shader
+
+Vertex shader:
+Vertex shader is called for each vertex to render, with the primary goal of telling th GPU where the vertex needs to be.
+Vertex shader will then pass the relevant data to the next stage which might be fragment shader.
+Transform the position to the relevant sceen positon to be drawn
+
+A case where vertex position might not be where the draw position need to be:
+Using camera object which may position objects on screen, differently from where they are in the world.
+
+Fragment shader:
+Fragment shader will be called on each pixel of a shape which should be drawn.
+It then controls & output the color of each pixel.
+
+Keep in mind - fragment shader is called alot more than vertex shader, load should fall on vertex shader if possible.
+
+When you want to use a shader, opengl demands that you enable the relevant shader and it will use it on rendering.
+
+Example for shader files:
+#shader vertex
+#version 330 core
+
+layout(location=0) in vec4 position;
+
+void main()
+{
+    gl_Position = position;
+};
+
+#shader fragment
+#version 330 core
+
+layout(location=0) out vec4 color;
+
+void main()
+{
+    color = vec4(0.2, 0.3, 0.8, 1.0);
+};
+
+To create an object as a shader, we need to create a program object and link a compiled shader to it, for example:
+Note - unsigned int represents the program id inside the opengl.
+static unsigned int CreateShader(const std::string& vertexShader, const std::string& fragmentShader)
+{
+	unsigned int program = glCreateProgram();
+	unsigned int vs = CompileShader(GL_VERTEX_SHADER, vertexShader);
+	unsigned int fs = CompileShader(GL_FRAGMENT_SHADER, fragmentShader);
+
+	glAttachShader(program, vs);
+	glAttachShader(program, fs);
+	glLinkProgram(program);
+	glValidateProgram(program);
+
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+
+	return program;
+}
+
+To create a compiled shader object, we need to call glCreateShader with the relevant shader type,
+With the created shader object we need to set the shader source code by calling glShaderSource and passing the code as string,
+Then we can call glCompileShader and send the relevant shader id:
+static unsigned int CompileShader(unsigned int type, const std::string& source)
+{
+	unsigned int id = glCreateShader(type);
+	const char* src = source.c_str();
+	glShaderSource(id, 1, &src, nullptr);
+	glCompileShader(id);
+
+	int result;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		int length;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)alloca(length * sizeof(char));
+		glGetShaderInfoLog(id, length, &length, message);
+		std::cout << "Failed to compile " << (type == GL_VERTEX_SHADER ? "vertex" : "fragment") << " shader!" << std::endl;
+		std::cout << message << std::endl;
+
+		glDeleteShader(id);
+
+		return 0;
+	}
+
+	return id;
+}
+
+After we have the shaders objects created and ready inside the OpenGL,
+We can tell the opengl to bind them before drawing, so on a draw, gl will use it.
+
+ShaderProgramSource source = ParseShader("res/shaders/Basic.shader");
+unsigned int shader = CreateShader(source.VertexSource, source.FragmentSource);
+glUseProgram(shader);
